@@ -1,0 +1,49 @@
+// Modelo de datos de Ciclos.
+// Prisma 7: el generador es "prisma-client" (el antiguo "prisma-client-js" está obsoleto)
+// y la URL del datasource se resuelve en prisma.config.ts, no aquí.
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+/// Perfil de la usuaria. El id es el userId de Clerk: así evitamos una tabla
+/// de mapeo y la fila se crea de forma perezosa la primera vez que entra.
+model User {
+  id         String     @id
+  hemisphere Hemisphere @default(NORTHERN)
+  timezone   String     @default("Europe/Madrid")
+  createdAt  DateTime   @default(now())
+  updatedAt  DateTime   @updatedAt
+
+  cycles Cycle[]
+}
+
+/// Un periodo registrado. startDate es el primer día de sangrado y es
+/// la fecha sobre la que se calcula todo lo demás.
+model Cycle {
+  id        String    @id @default(cuid())
+  userId    String
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  /// @db.Date y no DateTime completo: un ciclo se registra en días naturales.
+  /// Guardar la hora provocaría que un periodo anotado a las 23:00 en Madrid
+  /// se almacenase como el día anterior en UTC.
+  startDate DateTime  @db.Date
+  endDate   DateTime? @db.Date
+  notes     String?
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+
+  /// Impide registrar dos veces el mismo inicio de periodo.
+  @@unique([userId, startDate])
+  @@index([userId, startDate])
+}
+
+enum Hemisphere {
+  NORTHERN
+  SOUTHERN
+}
