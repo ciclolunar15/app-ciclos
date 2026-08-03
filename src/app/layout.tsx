@@ -32,6 +32,13 @@ export const metadata: Metadata = {
   description:
     "Registra tu ciclo menstrual y descubre cómo se acompasa con las fases de la luna.",
   applicationName: "Ciclos",
+  // Mismo ícono que usa el manifiesto (src/app/manifest.ts) para la
+  // instalación como PWA: la pestaña del navegador y el ícono instalado
+  // muestran así el mismo dibujo.
+  icons: {
+    icon: "/icono-512.png",
+    apple: "/icono-512.png",
+  },
   appleWebApp: {
     capable: true,
     title: "Ciclos",
@@ -40,7 +47,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#6b3f52",
+  themeColor: "#7a4489",
   // La app es una rejilla de calendario: el zoom del navegador debe seguir
   // disponible, así que no se restringe userScalable.
   width: "device-width",

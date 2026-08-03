@@ -10,6 +10,7 @@ import {
 import { faseLunar } from "@/lib/moon";
 import type { FaseCiclo } from "@/lib/cycle";
 import { COLOR_FASE } from "@/components/punto-fase";
+import { mesAbreviado } from "@/lib/format";
 import { Hemisphere } from "lunarphase-js";
 
 const SIN_FASE = "bg-borde";
@@ -126,7 +127,7 @@ export function GridSincronario({
             );
           }
 
-          const etiqueta = `Día ${celda.diaEnLuna}, Kin ${celda.kin}: ${sello} ${colorSello}, tono ${tono}${
+          const etiqueta = `${celda.fecha.getUTCDate()} de ${mesAbreviado(celda.fecha)} — Día ${celda.diaEnLuna}, Kin ${celda.kin}: ${sello} ${colorSello}, tono ${tono}${
             resaltado ? ` — periodo ${resaltado}` : ""
           }`;
 
@@ -141,6 +142,21 @@ export function GridSincronario({
               resaltado={resaltado}
               contenido={
                 <>
+                  {/* Fecha real (calendario común), pequeña en las esquinas
+                      superiores: el sincronario por sí solo no deja ver a
+                      simple vista qué día es cada celda. */}
+                  <span
+                    aria-hidden
+                    className="absolute left-0.5 top-0.5 text-[7px] leading-none text-tenue"
+                  >
+                    {celda.fecha.getUTCDate()}
+                  </span>
+                  <span
+                    aria-hidden
+                    className="absolute right-0.5 top-0.5 text-[7px] leading-none text-tenue"
+                  >
+                    {mesAbreviado(celda.fecha)}
+                  </span>
                   <span className="leading-none">{celda.diaEnLuna}</span>
                   <span
                     aria-hidden

@@ -39,6 +39,27 @@ export function paraInput(fecha: Date): string {
   return fecha.toISOString().slice(0, 10);
 }
 
+/** Abreviaturas de mes fijas: controla exactamente el texto ("ene", no
+ * "ene." ni "Ene"), sin depender de cómo cada motor de ICU formatee "short". */
+export const MESES_ABREV = [
+  "ene",
+  "feb",
+  "mar",
+  "abr",
+  "may",
+  "jun",
+  "jul",
+  "ago",
+  "sep",
+  "oct",
+  "nov",
+  "dic",
+] as const;
+
+export function mesAbreviado(fecha: Date): string {
+  return MESES_ABREV[fecha.getUTCMonth()];
+}
+
 export function capitalizar(texto: string): string {
   return texto.charAt(0).toUpperCase() + texto.slice(1);
 }

@@ -212,7 +212,10 @@ export default async function PaginaCalendario({ searchParams }: Props) {
       </header>
 
       {/* Además de las flechas, se puede deslizar el dedo hacia los costados
-          para cambiar de luna (móvil). */}
+          para cambiar de luna (móvil). Cada celda/marcador de día muestra
+          además su fecha real (día + mes abreviado), porque el sincronario
+          por sí solo no deja ver a simple vista qué día del calendario común
+          es cada uno. */}
       <DeslizarLuna hrefAnterior={hrefLunaAnterior} hrefSiguiente={hrefLunaSiguiente}>
         {esGrilla ? (
           <GridSincronario

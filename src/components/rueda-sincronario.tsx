@@ -9,6 +9,7 @@ import {
 } from "@/lib/sincronario";
 import { faseLunar } from "@/lib/moon";
 import type { FaseCiclo } from "@/lib/cycle";
+import { mesAbreviado } from "@/lib/format";
 import { Hemisphere } from "lunarphase-js";
 
 /**
@@ -136,7 +137,7 @@ export function RuedaSincronario({
           const lunaDelDia = faseLunar(celda.fecha, hemisferio);
           const fase = faseDe(celda.fecha);
           const previsto = fase === "menstrual" && !esRegistrado(celda.fecha);
-          const etiqueta = `Día ${celda.diaEnLuna}, Kin ${celda.kin}: ${sello} ${colorSello}, tono ${tono}${
+          const etiqueta = `${celda.fecha.getUTCDate()} de ${mesAbreviado(celda.fecha)} — Día ${celda.diaEnLuna}, Kin ${celda.kin}: ${sello} ${colorSello}, tono ${tono}${
             fase === "menstrual" ? ` — periodo ${previsto ? "previsto" : "registrado"}` : ""
           }`;
 
@@ -176,12 +177,24 @@ export function RuedaSincronario({
               )}
               <text
                 x={centroMarcador.x}
-                y={centroMarcador.y}
+                y={centroMarcador.y - 3}
                 textAnchor="middle"
                 dominantBaseline="central"
-                className="fill-abismo text-[11px] font-semibold"
+                className="fill-abismo text-[10px] font-semibold"
               >
                 {celda.diaEnLuna}
+              </text>
+              {/* Fecha real (calendario común) en chico, debajo del número
+                  de día del sincronario: por sí solo ese número no deja ver
+                  a simple vista qué día es cada marcador. */}
+              <text
+                x={centroMarcador.x}
+                y={centroMarcador.y + 7}
+                textAnchor="middle"
+                dominantBaseline="central"
+                className="fill-abismo/70 text-[6px]"
+              >
+                {celda.fecha.getUTCDate()} {mesAbreviado(celda.fecha)}
               </text>
               <text
                 x={puntoEmoji.x}

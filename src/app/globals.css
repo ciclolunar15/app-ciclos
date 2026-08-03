@@ -9,8 +9,8 @@
  */
 
 @theme inline {
-  --color-abismo: #3d232f;
-  --color-marea: #6b3f52;
+  --color-abismo: #5c2a6b;
+  --color-marea: #7a4489;
   --color-oceano: #db5f93;
   --color-turquesa: #eb96b3;
   --color-espuma: #fdf3f5;
@@ -35,20 +35,20 @@
 }
 
 :root {
-  --fondo: #efdde1;
-  --texto: #b17893;
-  --tenue: #8a6b73;
-  --borde: #ecd9de;
+  --fondo: #e9dcf0;
+  --texto: #9a71ae;
+  --tenue: #897292;
+  --borde: #e6dcee;
   --superficie: #ffffff;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --fondo: #7a3d5a;
+    --fondo: #7c4a8c;
     --texto: #fdf3f5;
-    --tenue: #c9a2ac;
-    --borde: #6b3f52;
-    --superficie: #4a2b3a;
+    --tenue: #c9a8d1;
+    --borde: #7a4489;
+    --superficie: #452a52;
   }
 }
 

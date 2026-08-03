@@ -47,7 +47,7 @@ export function BotonInstalarPwa() {
       onClick={instalar}
       className="flex items-center gap-1 rounded-full bg-luna px-3 py-1 text-xs font-semibold text-abismo shadow-sm transition-colors hover:bg-luna/90"
     >
-      <span aria-hidden>⭳</span>
+      <span aria-hidden>⬇</span>
       Instalar
     </button>
   );
