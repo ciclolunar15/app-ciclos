@@ -44,7 +44,7 @@ function Celda({
         colSpan7 ? "col-span-7 py-2" : "aspect-square"
       } ${
         esHoy
-          ? "ring-2 ring-luna ring-offset-1 ring-offset-superficie"
+          ? "ring-2 ring-espuma ring-offset-1 ring-offset-superficie"
           : esSeleccionado
             ? "ring-2 ring-tenue ring-offset-1 ring-offset-superficie"
             : ""

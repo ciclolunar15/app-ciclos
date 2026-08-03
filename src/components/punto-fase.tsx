@@ -22,6 +22,10 @@ export function LeyendaFases() {
   return (
     <div className="flex flex-wrap gap-x-4 gap-y-2 text-xs text-white">
       <span className="flex items-center gap-1.5">
+        <span className="size-3 rounded-full ring-2 ring-espuma ring-offset-1 ring-offset-superficie" />{" "}
+        Hoy
+      </span>
+      <span className="flex items-center gap-1.5">
         <span className="size-3 rounded bg-fase-menstrual" /> Periodo registrado
       </span>
       <span className="flex items-center gap-1.5">

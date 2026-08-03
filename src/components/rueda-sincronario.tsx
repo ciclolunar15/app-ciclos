@@ -154,7 +154,7 @@ export function RuedaSincronario({
                   cx={centroMarcador.x}
                   cy={centroMarcador.y}
                   r={RADIO_MARCADOR + 4}
-                  className={`fill-none ${esHoy ? "stroke-luna" : "stroke-tenue"}`}
+                  className={`fill-none ${esHoy ? "stroke-espuma" : "stroke-tenue"}`}
                   strokeWidth={2}
                 />
               )}
@@ -180,7 +180,7 @@ export function RuedaSincronario({
                 y={centroMarcador.y - 3}
                 textAnchor="middle"
                 dominantBaseline="central"
-                className="fill-abismo text-[10px] font-semibold"
+                className="fill-espuma text-[10px] font-semibold"
               >
                 {celda.diaEnLuna}
               </text>
@@ -192,7 +192,7 @@ export function RuedaSincronario({
                 y={centroMarcador.y + 7}
                 textAnchor="middle"
                 dominantBaseline="central"
-                className="fill-abismo/70 text-[6px]"
+                className="fill-espuma/70 text-[6px]"
               >
                 {celda.fecha.getUTCDate()} {mesAbreviado(celda.fecha)}
               </text>
