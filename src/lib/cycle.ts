@@ -264,9 +264,9 @@ export function duracionUltimoSangrado(ciclo: CicloRegistrado): number | null {
 
 export const ETIQUETAS_FASE: Record<FaseCiclo, string> = {
   menstrual: "Menstrual",
-  folicular: "Folicular",
-  ovulatoria: "Ovulatoria",
-  lutea: "Lútea",
+  folicular: "Pre ovulación",
+  ovulatoria: "Ovulación",
+  lutea: "Pre menstrual",
 };
 
 export const ETIQUETAS_FIABILIDAD: Record<Fiabilidad, string> = {

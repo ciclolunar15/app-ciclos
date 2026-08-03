@@ -1,20 +1,21 @@
 @import "tailwindcss";
 
 /*
- * Paleta "Ocaso lila": ciruela oscuro, malva y orquídea suave, con blanco
- * cálido y el dorado de la luna. Sustituye al azul océano original,
- * manteniendo la sensación de cielo nocturno en tonos violáceos.
+ * Paleta "Loto rosa": rosa empolvado y vino apagado como acento principal,
+ * con el dorado de la luna como detalle (no como protagonista). Sustituye a
+ * "Ocaso lila", buscando un tono más cálido y sereno, entre espiritual y
+ * celestial, sin caer en rosa fuerte ni dorado chillón.
  * Tailwind v4 se configura aquí en CSS; ya no existe tailwind.config.js.
  */
 
 @theme inline {
-  --color-abismo: #2d1b3d;
-  --color-marea: #4a2f5c;
-  --color-oceano: #8c6a9e;
-  --color-turquesa: #b98cc4;
-  --color-espuma: #faf5fb;
-  --color-arena: #f0e0d8;
-  --color-luna: #f0c987;
+  --color-abismo: #3d232f;
+  --color-marea: #6b3f52;
+  --color-oceano: #db5f93;
+  --color-turquesa: #eb96b3;
+  --color-espuma: #fdf3f5;
+  --color-arena: #f3ded6;
+  --color-luna: #d4a132;
 
   /* Colores de las cuatro fases del ciclo */
   --color-fase-menstrual: #c9556a;
@@ -34,20 +35,20 @@
 }
 
 :root {
-  --fondo: #faf5fb;
-  --texto: #2d1b3d;
-  --tenue: #7a6787;
-  --borde: #e5d8e8;
+  --fondo: #efdde1;
+  --texto: #b17893;
+  --tenue: #8a6b73;
+  --borde: #ecd9de;
   --superficie: #ffffff;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --fondo: #2d1b3d;
-    --texto: #faf5fb;
-    --tenue: #b8a2c2;
-    --borde: #4a2f5c;
-    --superficie: #3a2549;
+    --fondo: #7a3d5a;
+    --texto: #fdf3f5;
+    --tenue: #c9a2ac;
+    --borde: #6b3f52;
+    --superficie: #4a2b3a;
   }
 }
 

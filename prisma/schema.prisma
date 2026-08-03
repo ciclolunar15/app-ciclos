@@ -47,3 +47,33 @@ enum Hemisphere {
   NORTHERN
   SOUTHERN
 }
+
+/// Consejo de bienestar cargado por la administradora, ligado a una
+/// combinación de fase del ciclo + fase lunar. Contenido curado a mano, no
+/// generado por la app — ver lib/dal/consejos.ts.
+model Consejo {
+  id        String           @id @default(cuid())
+  faseCiclo FaseCicloConsejo
+  faseLunar FaseLunarConsejo
+  texto     String
+  /// userId (Clerk) de la administradora que lo cargó.
+  creadoPor String
+  createdAt DateTime         @default(now())
+  updatedAt DateTime         @updatedAt
+
+  @@index([faseCiclo, faseLunar])
+}
+
+enum FaseCicloConsejo {
+  MENSTRUAL
+  PRE_OVULACION
+  OVULACION
+  PRE_MENSTRUAL
+}
+
+enum FaseLunarConsejo {
+  NUEVA
+  CRECIENTE
+  LLENA
+  MENGUANTE
+}

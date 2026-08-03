@@ -40,7 +40,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#4a2f5c",
+  themeColor: "#6b3f52",
   // La app es una rejilla de calendario: el zoom del navegador debe seguir
   // disponible, así que no se restringe userScalable.
   width: "device-width",

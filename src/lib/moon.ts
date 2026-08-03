@@ -86,4 +86,24 @@ export function aHemisferio(valor: "NORTHERN" | "SOUTHERN"): Hemisphere {
   return valor === "SOUTHERN" ? Hemisphere.SOUTHERN : Hemisphere.NORTHERN;
 }
 
+export type FaseLunarAmplia = "nueva" | "creciente" | "llena" | "menguante";
+
+/** Agrupa las 8 fases finas en las 4 amplias que usan los consejos de la admin. */
+export function faseLunarAmplia(clave: ClaveFaseLunar): FaseLunarAmplia {
+  switch (clave) {
+    case "nueva":
+      return "nueva";
+    case "creciente-visible":
+    case "cuarto-creciente":
+    case "gibosa-creciente":
+      return "creciente";
+    case "llena":
+      return "llena";
+    case "gibosa-menguante":
+    case "cuarto-menguante":
+    case "menguante-visible":
+      return "menguante";
+  }
+}
+
 export { Hemisphere };
