@@ -7,6 +7,7 @@ import Link from "next/link";
 import { Show } from "@clerk/nextjs";
 
 import { faseLunar } from "@/lib/moon";
+import { BotonInstalarPwa } from "@/components/boton-instalar-pwa";
 
 // La imagen de fondo es opcional: si no está en public/, el degradado
 // "degradado-ola" ya cubre la sección sin dejar hueco ni error de carga.
@@ -32,6 +33,13 @@ export default function Landing() {
             className="object-cover opacity-40"
           />
         )}
+
+        <header className="absolute inset-x-0 top-0 z-10 mx-auto flex w-full max-w-3xl items-center gap-3 px-6 pt-6">
+          <span className="font-serif text-lg font-semibold tracking-tight text-espuma">
+            Ciclos
+          </span>
+          <BotonInstalarPwa />
+        </header>
 
         <div className="relative mx-auto w-full max-w-3xl px-6 py-16 sm:py-24">
           <p className="flex items-center gap-2 text-sm text-espuma/80">

@@ -4,6 +4,7 @@ import { auth, currentUser } from "@clerk/nextjs/server";
 
 import { NavPrincipal } from "@/components/nav-principal";
 import { SincronizadorZonaHoraria } from "@/components/sincronizador-zona-horaria";
+import { BotonInstalarPwa } from "@/components/boton-instalar-pwa";
 import { perfilActual } from "@/lib/dal/cycles";
 
 export default async function LayoutApp({
@@ -52,12 +53,15 @@ export default async function LayoutApp({
       <SincronizadorZonaHoraria zonaActual={perfil.timezone} />
       <header className="sticky top-0 z-10 border-b border-borde bg-fondo/85 backdrop-blur">
         <div className="mx-auto flex w-full max-w-3xl items-center justify-between gap-4 px-4 py-3">
-          <Link
-            href="/hoy"
-            className="font-serif text-lg font-semibold tracking-tight text-texto"
-          >
-            Ciclos
-          </Link>
+          <div className="flex items-center gap-3">
+            <Link
+              href="/hoy"
+              className="font-serif text-lg font-semibold tracking-tight text-texto"
+            >
+              Ciclos
+            </Link>
+            <BotonInstalarPwa />
+          </div>
           <UserButton
             appearance={{ elements: { avatarBox: "size-8" } }}
             userProfileProps={{ appearance: { elements: { rootBox: "w-full" } } }}

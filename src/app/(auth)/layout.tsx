@@ -1,6 +1,8 @@
 import Image from "next/image";
 import Link from "next/link";
 
+import { BotonInstalarPwa } from "@/components/boton-instalar-pwa";
+
 export default function LayoutAuth({
   children,
 }: {
@@ -17,12 +19,15 @@ export default function LayoutAuth({
         dependiera de esa misma altura, el ajuste que lo separa del sol del
         marco en una pantalla lo solapa en la otra.
       */}
-      <Link
-        href="/"
-        className="absolute top-6 left-1/2 -translate-x-1/2 font-serif text-lg font-semibold tracking-tight text-espuma transition-opacity hover:opacity-80"
-      >
-        Ciclos
-      </Link>
+      <div className="absolute top-6 left-1/2 flex -translate-x-1/2 items-center gap-3">
+        <Link
+          href="/"
+          className="font-serif text-lg font-semibold tracking-tight text-espuma transition-opacity hover:opacity-80"
+        >
+          Ciclos
+        </Link>
+        <BotonInstalarPwa />
+      </div>
 
       <div className="relative flex items-center justify-center">
         {/* marco.png es casi todo transparente: solo el trazado dorado es

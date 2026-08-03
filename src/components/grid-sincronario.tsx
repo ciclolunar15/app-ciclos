@@ -20,6 +20,7 @@ function Celda({
   etiqueta,
   esHoy,
   esSeleccionado,
+  resaltado = null,
   contenido,
   colSpan7 = false,
 }: {
@@ -28,6 +29,8 @@ function Celda({
   etiqueta: string;
   esHoy: boolean;
   esSeleccionado: boolean;
+  /** Periodo real (borde sólido + fondo) o previsto (borde punteado, hueco). */
+  resaltado?: "registrado" | "previsto" | null;
   contenido: React.ReactNode;
   colSpan7?: boolean;
 }) {
@@ -43,6 +46,12 @@ function Celda({
           ? "ring-2 ring-luna ring-offset-1 ring-offset-superficie"
           : esSeleccionado
             ? "ring-2 ring-tenue ring-offset-1 ring-offset-superficie"
+            : ""
+      } ${
+        resaltado === "registrado"
+          ? "border-2 border-fase-menstrual bg-fase-menstrual/20"
+          : resaltado === "previsto"
+            ? "border-2 border-dashed border-fase-menstrual"
             : ""
       }`}
       data-fecha={fecha.toISOString().slice(0, 10)}
@@ -60,6 +69,7 @@ export function GridSincronario({
   diaSeleccionado,
   hrefParaDia,
   faseDe,
+  esRegistrado,
   hemisferio,
 }: {
   celdas: CeldaSincronario[];
@@ -69,6 +79,7 @@ export function GridSincronario({
   diaSeleccionado: Date;
   hrefParaDia: (iso: string) => string;
   faseDe: (fecha: Date) => FaseCiclo | null;
+  esRegistrado: (fecha: Date) => boolean;
   hemisferio: Hemisphere;
 }) {
   const isoHoy = fechaDeHoy.toISOString().slice(0, 10);
@@ -86,6 +97,12 @@ export function GridSincronario({
           const tono = TONOS[celda.tono - 1];
           const lunaDelDia = faseLunar(celda.fecha, hemisferio);
           const fase = faseDe(celda.fecha);
+          const resaltado: "registrado" | "previsto" | null =
+            fase === "menstrual"
+              ? esRegistrado(celda.fecha)
+                ? "registrado"
+                : "previsto"
+              : null;
 
           const esSeleccionado = iso === isoSeleccionado;
 
@@ -109,7 +126,9 @@ export function GridSincronario({
             );
           }
 
-          const etiqueta = `Día ${celda.diaEnLuna}, Kin ${celda.kin}: ${sello} ${colorSello}, tono ${tono}`;
+          const etiqueta = `Día ${celda.diaEnLuna}, Kin ${celda.kin}: ${sello} ${colorSello}, tono ${tono}${
+            resaltado ? ` — periodo ${resaltado}` : ""
+          }`;
 
           return (
             <Celda
@@ -119,6 +138,7 @@ export function GridSincronario({
               etiqueta={etiqueta}
               esHoy={esHoy}
               esSeleccionado={esSeleccionado}
+              resaltado={resaltado}
               contenido={
                 <>
                   <span className="leading-none">{celda.diaEnLuna}</span>

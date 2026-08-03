@@ -48,6 +48,7 @@ export function RuedaSincronario({
   diaSeleccionado,
   hrefParaDia,
   faseDe,
+  esRegistrado,
   hemisferio,
 }: {
   celdas: CeldaSincronario[];
@@ -58,6 +59,7 @@ export function RuedaSincronario({
   diaSeleccionado: Date;
   hrefParaDia: (iso: string) => string;
   faseDe: (fecha: Date) => FaseCiclo | null;
+  esRegistrado: (fecha: Date) => boolean;
   hemisferio: Hemisphere;
 }) {
   const isoHoy = fechaDeHoy.toISOString().slice(0, 10);
@@ -133,7 +135,10 @@ export function RuedaSincronario({
           const tono = TONOS[celda.tono - 1];
           const lunaDelDia = faseLunar(celda.fecha, hemisferio);
           const fase = faseDe(celda.fecha);
-          const etiqueta = `Día ${celda.diaEnLuna}, Kin ${celda.kin}: ${sello} ${colorSello}, tono ${tono}`;
+          const previsto = fase === "menstrual" && !esRegistrado(celda.fecha);
+          const etiqueta = `Día ${celda.diaEnLuna}, Kin ${celda.kin}: ${sello} ${colorSello}, tono ${tono}${
+            fase === "menstrual" ? ` — periodo ${previsto ? "previsto" : "registrado"}` : ""
+          }`;
 
           const angulo = ANGULO_INICIAL + (celda.diaEnLuna - 1 + 0.5) * PASO;
           const centroMarcador = punto(RADIO_MARCADORES, angulo);
@@ -152,12 +157,23 @@ export function RuedaSincronario({
                   strokeWidth={2}
                 />
               )}
-              <circle
-                cx={centroMarcador.x}
-                cy={centroMarcador.y}
-                r={RADIO_MARCADOR}
-                className={fase ? FILL_FASE[fase] : FILL_SIN_FASE}
-              />
+              {previsto ? (
+                <circle
+                  cx={centroMarcador.x}
+                  cy={centroMarcador.y}
+                  r={RADIO_MARCADOR}
+                  className="fill-fase-menstrual/25 stroke-fase-menstrual"
+                  strokeWidth={2}
+                  strokeDasharray="5 3"
+                />
+              ) : (
+                <circle
+                  cx={centroMarcador.x}
+                  cy={centroMarcador.y}
+                  r={RADIO_MARCADOR}
+                  className={fase ? FILL_FASE[fase] : FILL_SIN_FASE}
+                />
+              )}
               <text
                 x={centroMarcador.x}
                 y={centroMarcador.y}

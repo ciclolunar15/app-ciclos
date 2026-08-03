@@ -26,6 +26,7 @@ import { RuedaSincronario } from "@/components/rueda-sincronario";
 import { GridSincronario } from "@/components/grid-sincronario";
 import { Desplegable } from "@/components/desplegable";
 import { SeccionConsejos } from "@/components/seccion-consejos";
+import { DeslizarLuna } from "@/components/deslizar-luna";
 
 export const metadata: Metadata = {
   title: "Calendario",
@@ -136,6 +137,22 @@ export default async function PaginaCalendario({ searchParams }: Props) {
     );
   }
 
+  /**
+   * Un día de sangrado es "registrado" cuando cae dentro del rango real de
+   * algún ciclo guardado (startDate..endDate, o hasta hoy si aún no se cerró
+   * el sangrado). Cualquier otro día que la fase marque como "menstrual"
+   * -sea la cola de un sangrado en curso o un ciclo futuro/pasado
+   * extrapolado- es "previsto": una estimación, no un dato real.
+   */
+  function esRegistrado(dia: Date): boolean {
+    if (dia.getTime() > fechaDeHoy.getTime()) return false;
+    return ciclos.some((c) => {
+      const inicio = c.startDate.getTime();
+      const fin = (c.endDate ?? fechaDeHoy).getTime();
+      return dia.getTime() >= inicio && dia.getTime() <= fin;
+    });
+  }
+
   const lunaPrevia = lunaAnterior(lunaActual);
   const lunaPosterior = lunaSiguiente(lunaActual);
 
@@ -146,6 +163,9 @@ export default async function PaginaCalendario({ searchParams }: Props) {
 
   const hrefParaDia = (iso: string) =>
     `/calendario?${esGrilla ? "vista=grilla&" : ""}luna=${claveLuna(lunaActual.inicio, lunaActual.luna)}&dia=${iso}`;
+
+  const hrefLunaAnterior = `/calendario?${esGrilla ? "vista=grilla&" : ""}luna=${claveLuna(lunaPrevia.inicio, lunaPrevia.luna)}`;
+  const hrefLunaSiguiente = `/calendario?${esGrilla ? "vista=grilla&" : ""}luna=${claveLuna(lunaPosterior.inicio, lunaPosterior.luna)}`;
 
   return (
     <div className="flex flex-col gap-5">
@@ -173,7 +193,7 @@ export default async function PaginaCalendario({ searchParams }: Props) {
 
       <header className="flex items-center justify-between gap-2">
         <Link
-          href={`/calendario?${esGrilla ? "vista=grilla&" : ""}luna=${claveLuna(lunaPrevia.inicio, lunaPrevia.luna)}`}
+          href={hrefLunaAnterior}
           aria-label="Luna anterior"
           className={CLASE_FLECHA}
         >
@@ -183,7 +203,7 @@ export default async function PaginaCalendario({ searchParams }: Props) {
           Luna {lunaActual.luna} · {capitalizar(nombreLuna)}
         </h1>
         <Link
-          href={`/calendario?${esGrilla ? "vista=grilla&" : ""}luna=${claveLuna(lunaPosterior.inicio, lunaPosterior.luna)}`}
+          href={hrefLunaSiguiente}
           aria-label="Luna siguiente"
           className={CLASE_FLECHA}
         >
@@ -191,30 +211,36 @@ export default async function PaginaCalendario({ searchParams }: Props) {
         </Link>
       </header>
 
-      {esGrilla ? (
-        <GridSincronario
-          celdas={diasDeLuna(lunaActual.inicio, lunaActual.luna)}
-          luna={lunaActual.luna}
-          inicio={lunaActual.inicio}
-          fechaDeHoy={fechaDeHoy}
-          diaSeleccionado={diaSeleccionado}
-          hrefParaDia={hrefParaDia}
-          faseDe={faseDe}
-          hemisferio={hemisferio}
-        />
-      ) : (
-        <RuedaSincronario
-          celdas={diasDeLuna(lunaActual.inicio, lunaActual.luna)}
-          luna={lunaActual.luna}
-          nombreLuna={capitalizar(nombreLuna)}
-          inicio={lunaActual.inicio}
-          fechaDeHoy={fechaDeHoy}
-          diaSeleccionado={diaSeleccionado}
-          hrefParaDia={hrefParaDia}
-          faseDe={faseDe}
-          hemisferio={hemisferio}
-        />
-      )}
+      {/* Además de las flechas, se puede deslizar el dedo hacia los costados
+          para cambiar de luna (móvil). */}
+      <DeslizarLuna hrefAnterior={hrefLunaAnterior} hrefSiguiente={hrefLunaSiguiente}>
+        {esGrilla ? (
+          <GridSincronario
+            celdas={diasDeLuna(lunaActual.inicio, lunaActual.luna)}
+            luna={lunaActual.luna}
+            inicio={lunaActual.inicio}
+            fechaDeHoy={fechaDeHoy}
+            diaSeleccionado={diaSeleccionado}
+            hrefParaDia={hrefParaDia}
+            faseDe={faseDe}
+            esRegistrado={esRegistrado}
+            hemisferio={hemisferio}
+          />
+        ) : (
+          <RuedaSincronario
+            celdas={diasDeLuna(lunaActual.inicio, lunaActual.luna)}
+            luna={lunaActual.luna}
+            nombreLuna={capitalizar(nombreLuna)}
+            inicio={lunaActual.inicio}
+            fechaDeHoy={fechaDeHoy}
+            diaSeleccionado={diaSeleccionado}
+            hrefParaDia={hrefParaDia}
+            faseDe={faseDe}
+            esRegistrado={esRegistrado}
+            hemisferio={hemisferio}
+          />
+        )}
+      </DeslizarLuna>
 
       <LeyendaFases />
 
