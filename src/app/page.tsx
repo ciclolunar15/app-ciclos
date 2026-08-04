@@ -9,6 +9,12 @@ import { Show } from "@clerk/nextjs";
 import { faseLunar } from "@/lib/moon";
 import { BotonInstalarPwa } from "@/components/boton-instalar-pwa";
 
+// Sin esto, Next.js pre-renderiza la landing una sola vez en el build (no
+// depende de sesión ni de ninguna otra API dinámica) y congela `new Date()`
+// en ese momento: la fase lunar mostrada dejaría de coincidir con la real a
+// medida que pasan los días.
+export const dynamic = "force-dynamic";
+
 // La imagen de fondo es opcional: si no está en public/, el degradado
 // "degradado-ola" ya cubre la sección sin dejar hueco ni error de carga.
 const TIENE_IMAGEN_FONDO = existsSync(
