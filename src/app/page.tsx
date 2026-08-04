@@ -36,7 +36,7 @@ export default function Landing() {
 
         <header className="absolute inset-x-0 top-0 z-10 mx-auto flex w-full max-w-3xl items-center gap-3 px-6 pt-6">
           <span className="font-serif text-lg font-semibold tracking-tight text-espuma">
-            Ciclos
+            Maresa
           </span>
           <BotonInstalarPwa />
         </header>
@@ -111,7 +111,7 @@ export default function Landing() {
       </section>
 
       <footer className="border-t border-borde px-6 py-6 text-center text-xs text-tenue">
-        Ciclos no es un producto sanitario. Las predicciones son orientativas y
+        Maresa no es un producto sanitario. Las predicciones son orientativas y
         no sustituyen el criterio médico.
       </footer>
     </div>

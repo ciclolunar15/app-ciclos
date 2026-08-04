@@ -6,8 +6,8 @@ import type { MetadataRoute } from "next";
  */
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: "Ciclos — tu ciclo y la luna",
-    short_name: "Ciclos",
+    name: "Maresa — tu ciclo y la luna",
+    short_name: "Maresa",
     description:
       "Registra tu ciclo menstrual y observa cómo se acompasa con las fases de la luna.",
     start_url: "/hoy",
@@ -21,21 +21,15 @@ export default function manifest(): MetadataRoute.Manifest {
     categories: ["health", "lifestyle"],
     icons: [
       {
-        src: "/icono-192.png",
-        sizes: "192x192",
-        type: "image/png",
+        src: "/icono_real.jpeg",
+        sizes: "1280x1280",
+        type: "image/jpeg",
         purpose: "any",
       },
       {
-        src: "/icono-512.png",
-        sizes: "512x512",
-        type: "image/png",
-        purpose: "any",
-      },
-      {
-        src: "/icono-maskable-512.png",
-        sizes: "512x512",
-        type: "image/png",
+        src: "/icono_real.jpeg",
+        sizes: "1280x1280",
+        type: "image/jpeg",
         purpose: "maskable",
       },
     ],

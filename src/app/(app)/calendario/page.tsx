@@ -233,7 +233,6 @@ export default async function PaginaCalendario({ searchParams }: Props) {
           <RuedaSincronario
             celdas={diasDeLuna(lunaActual.inicio, lunaActual.luna)}
             luna={lunaActual.luna}
-            nombreLuna={capitalizar(nombreLuna)}
             inicio={lunaActual.inicio}
             fechaDeHoy={fechaDeHoy}
             diaSeleccionado={diaSeleccionado}

@@ -1,11 +1,11 @@
-# Ciclos
+# Maresa
 
 Plataforma de bienestar femenino: seguimiento del ciclo menstrual basado en
 evidencia, con una capa opcional de contenido espiritual/simbólico (fases
 lunares, calendario de 13 lunas, consejos curados por una administradora).
 Aplicación web instalable (PWA), multiusuario y en español.
 
-## Qué es Ciclos
+## Qué es Maresa
 
 No es "otro calendario menstrual". La idea de fondo es que, con el tiempo,
 la app aprenda de los propios datos de cada usuaria y le devuelva patrones
@@ -273,7 +273,7 @@ fallaría. `@serwist/turbopack` compila `src/app/sw.ts` y lo sirve desde
 
 ## Aviso
 
-Ciclos no es un producto sanitario. Las predicciones son estimaciones basadas en
+Maresa no es un producto sanitario. Las predicciones son estimaciones basadas en
 el historial registrado, no sustituyen el criterio médico, y la ventana fértil
 que muestra no es un método anticonceptivo. La fase lunar y el sincronario son
 contenido simbólico/espiritual: no implican ninguna relación causal con el

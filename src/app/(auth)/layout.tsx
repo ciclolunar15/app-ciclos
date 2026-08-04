@@ -11,11 +11,11 @@ export default function LayoutAuth({
   return (
     <div className="relative flex min-h-dvh flex-col items-center justify-center bg-marea px-4 py-12">
       {/*
-        "Ciclos" se fija a una distancia constante de la parte superior del
+        "Maresa" se fija a una distancia constante de la parte superior del
         viewport, en vez de vivir en el mismo flujo centrado que la tarjeta.
         La tarjeta de Clerk cambia de altura según la pantalla (entrar vs.
         registrarse trae un campo más), lo que desplaza el conjunto
-        marco+tarjeta verticalmente entre una página y otra. Si "Ciclos"
+        marco+tarjeta verticalmente entre una página y otra. Si "Maresa"
         dependiera de esa misma altura, el ajuste que lo separa del sol del
         marco en una pantalla lo solapa en la otra.
       */}
@@ -24,7 +24,7 @@ export default function LayoutAuth({
           href="/"
           className="font-serif text-lg font-semibold tracking-tight text-espuma transition-opacity hover:opacity-80"
         >
-          Ciclos
+          Maresa
         </Link>
         <BotonInstalarPwa />
       </div>

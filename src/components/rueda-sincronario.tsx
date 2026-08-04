@@ -43,7 +43,6 @@ function punto(radio: number, anguloGrados: number) {
 export function RuedaSincronario({
   celdas,
   luna,
-  nombreLuna,
   inicio,
   fechaDeHoy,
   diaSeleccionado,
@@ -54,7 +53,6 @@ export function RuedaSincronario({
 }: {
   celdas: CeldaSincronario[];
   luna: number;
-  nombreLuna: string;
   inicio: Date;
   fechaDeHoy: Date;
   diaSeleccionado: Date;
@@ -108,23 +106,24 @@ export function RuedaSincronario({
           );
         })}
 
-        {/* Centro: luna y nombre. */}
-        <text
-          x={CENTRO}
-          y={CENTRO - 6}
-          textAnchor="middle"
-          className="fill-texto font-serif text-[15px] font-semibold"
-        >
-          Luna {luna}
-        </text>
-        <text
-          x={CENTRO}
-          y={CENTRO + 14}
-          textAnchor="middle"
-          className="fill-tenue font-serif text-[13px]"
-        >
-          {nombreLuna}
-        </text>
+        {/* Imagen fija del centro del sincronario: no depende de la luna
+            mostrada (siempre la misma), recortada en círculo exacto para
+            encajar en el círculo interior. */}
+        <defs>
+          <clipPath id="recorte-centro-sincronario">
+            <circle cx={CENTRO} cy={CENTRO} r={RADIO_INTERIOR} />
+          </clipPath>
+        </defs>
+        <image
+          href="/centro_sincro.png"
+          x={CENTRO - RADIO_INTERIOR}
+          y={CENTRO - RADIO_INTERIOR}
+          width={RADIO_INTERIOR * 2}
+          height={RADIO_INTERIOR * 2}
+          preserveAspectRatio="xMidYMid slice"
+          clipPath="url(#recorte-centro-sincronario)"
+        />
+
 
         {diasNormales.map((celda) => {
           if (celda.tipo !== "normal") return null;

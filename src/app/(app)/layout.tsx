@@ -58,7 +58,7 @@ export default async function LayoutApp({
               href="/hoy"
               className="font-serif text-lg font-semibold tracking-tight text-texto"
             >
-              Ciclos
+              Maresa
             </Link>
             <BotonInstalarPwa />
           </div>

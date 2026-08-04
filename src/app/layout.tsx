@@ -26,22 +26,22 @@ const cinzel = Cinzel({
 
 export const metadata: Metadata = {
   title: {
-    default: "Ciclos",
-    template: "%s · Ciclos",
+    default: "Maresa",
+    template: "%s · Maresa",
   },
   description:
     "Registra tu ciclo menstrual y descubre cómo se acompasa con las fases de la luna.",
-  applicationName: "Ciclos",
+  applicationName: "Maresa",
   // Mismo ícono que usa el manifiesto (src/app/manifest.ts) para la
   // instalación como PWA: la pestaña del navegador y el ícono instalado
   // muestran así el mismo dibujo.
   icons: {
-    icon: "/icono-512.png",
-    apple: "/icono-512.png",
+    icon: "/icono_real.jpeg",
+    apple: "/icono_real.jpeg",
   },
   appleWebApp: {
     capable: true,
-    title: "Ciclos",
+    title: "Maresa",
     statusBarStyle: "black-translucent",
   },
 };
