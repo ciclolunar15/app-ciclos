@@ -3,6 +3,7 @@ import { ClerkProvider } from "@clerk/nextjs";
 import { esES } from "@clerk/localizations";
 import { SerwistProvider } from "@serwist/turbopack/react";
 import { Geist_Mono, Cormorant_Garamond, Cinzel } from "next/font/google";
+import { ActualizadorServiceWorker } from "@/components/actualizador-service-worker";
 import "./globals.css";
 
 const geistMono = Geist_Mono({
@@ -68,7 +69,10 @@ export default function RootLayout({
         <body className="flex min-h-full flex-col">
           {/* El service worker se sirve desde la ruta /serwist, que lo compila
               a partir de src/app/sw.ts. */}
-          <SerwistProvider swUrl="/serwist/sw.js">{children}</SerwistProvider>
+          <SerwistProvider swUrl="/serwist/sw.js">
+            <ActualizadorServiceWorker />
+            {children}
+          </SerwistProvider>
         </body>
       </html>
     </ClerkProvider>
