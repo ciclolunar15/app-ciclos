@@ -72,3 +72,26 @@ export function enDias(dias: number): string {
   if (dias > 0) return `en ${dias} días`;
   return `hace ${Math.abs(dias)} días`;
 }
+
+const RELATIVO = new Intl.RelativeTimeFormat("es", { numeric: "auto", style: "short" });
+/** Fecha de respaldo para publicaciones de más de un mes: acá sí importa la
+ * hora real (no es una fecha civil como las de ciclo), así que no se fuerza
+ * UTC — usa el huso del entorno donde corre. */
+const FECHA_HORA = new Intl.DateTimeFormat("es-ES", { day: "numeric", month: "short" });
+
+/** "ahora", "hace 5 min", "hace 2 h", "hace 3 d"... para publicaciones del foro. */
+export function haceTiempo(fecha: Date): string {
+  const segundos = Math.round((fecha.getTime() - Date.now()) / 1000);
+  if (Math.abs(segundos) < 60) return "ahora";
+
+  const minutos = Math.round(segundos / 60);
+  if (Math.abs(minutos) < 60) return RELATIVO.format(minutos, "minute");
+
+  const horas = Math.round(minutos / 60);
+  if (Math.abs(horas) < 24) return RELATIVO.format(horas, "hour");
+
+  const dias = Math.round(horas / 24);
+  if (Math.abs(dias) < 30) return RELATIVO.format(dias, "day");
+
+  return FECHA_HORA.format(fecha);
+}

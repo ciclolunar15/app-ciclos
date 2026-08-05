@@ -20,7 +20,9 @@ model User {
   createdAt  DateTime   @default(now())
   updatedAt  DateTime   @updatedAt
 
-  cycles Cycle[]
+  cycles            Cycle[]
+  postsForo         PostForo[]
+  pushSubscriptions PushSubscription[]
 }
 
 /// Un periodo registrado. startDate es el primer día de sangrado y es
@@ -76,4 +78,38 @@ enum FaseLunarConsejo {
   CRECIENTE
   LLENA
   MENGUANTE
+}
+
+/// Post del foro comunitario. userId siempre identifica a la autora real
+/// (para poder borrar/moderar), aunque esAnonimo haga que no se muestre.
+///
+/// Los hilos son de un solo nivel a propósito: responder a una respuesta
+/// cuelga del mismo hilo raíz en vez de anidar más (ver crearPost en
+/// lib/dal/foro.ts) — "se sigue sobre el mismo hilo", no un árbol infinito.
+model PostForo {
+  id           String     @id @default(cuid())
+  userId       String
+  user         User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  contenido    String
+  esAnonimo    Boolean    @default(false)
+  createdAt    DateTime   @default(now())
+  respuestaAId String?
+  respuestaA   PostForo?  @relation("Respuestas", fields: [respuestaAId], references: [id], onDelete: Cascade)
+  respuestas   PostForo[] @relation("Respuestas")
+
+  @@index([createdAt])
+  @@index([respuestaAId])
+}
+
+/// Suscripción push de un dispositivo (una usuaria puede tener varias: el
+/// celular, la compu, etc.). Genérico a propósito, no es solo del foro — sirve
+/// de base para los recordatorios de ciclo que vengan después.
+model PushSubscription {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  endpoint  String   @unique
+  p256dh    String
+  auth      String
+  createdAt DateTime @default(now())
 }

@@ -9,6 +9,12 @@ const nextConfig: NextConfig = {
     // esto Turbopack lo toma como raíz del espacio de trabajo.
     root: path.resolve(import.meta.dirname),
   },
+  images: {
+    // Fotos de perfil de las usuarias en el foro (dal/foro.ts las trae de
+    // Clerk). El UserButton del header maneja su propio avatar sin pasar por
+    // next/image, así que hasta el foro no hacía falta esto.
+    remotePatterns: [{ protocol: "https", hostname: "img.clerk.com" }],
+  },
   async headers() {
     return [
       {
