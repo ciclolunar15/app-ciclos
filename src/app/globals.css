@@ -18,10 +18,10 @@
   --color-luna: #d4a132;
 
   /* Colores de las cuatro fases del ciclo */
-  --color-fase-menstrual: #c9556a;
-  --color-fase-folicular: #5a9c7c;
-  --color-fase-ovulatoria: #e0a03c;
-  --color-fase-lutea: #7d6cae;
+  --color-fase-menstrual: #e0294f;
+  --color-fase-folicular: #1f9d63;
+  --color-fase-ovulatoria: #e8960a;
+  --color-fase-lutea: #7c3aed;
 
   --color-fondo: var(--fondo);
   --color-texto: var(--texto);
@@ -32,6 +32,7 @@
   --font-sans: var(--font-cinzel);
   --font-mono: var(--font-geist-mono);
   --font-serif: var(--font-cormorant);
+  --font-tangerine: var(--font-tangerine);
 }
 
 :root {

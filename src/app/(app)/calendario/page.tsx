@@ -187,7 +187,7 @@ export default async function PaginaCalendario({ searchParams }: Props) {
             !esGrilla ? "bg-luna text-abismo" : "text-tenue hover:text-texto"
           }`}
         >
-          Rueda
+          Mi ciclo
         </Link>
       </div>
 

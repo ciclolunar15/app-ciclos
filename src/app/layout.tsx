@@ -2,7 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { ClerkProvider } from "@clerk/nextjs";
 import { esES } from "@clerk/localizations";
 import { SerwistProvider } from "@serwist/turbopack/react";
-import { Geist_Mono, Cormorant_Garamond, Cinzel } from "next/font/google";
+import { Geist_Mono, Cormorant_Garamond, Cinzel, Tangerine } from "next/font/google";
 import { ActualizadorServiceWorker } from "@/components/actualizador-service-worker";
 import "./globals.css";
 
@@ -22,6 +22,14 @@ const cormorantGaramond = Cormorant_Garamond({
 const cinzel = Cinzel({
   variable: "--font-cinzel",
   weight: ["400", "500", "600", "700"],
+  subsets: ["latin"],
+});
+
+// Solo para el nombre "Maresa" (el wordmark del header). Tangerine es una
+// caligráfica: no tiene variantes intermedias, solo regular y bold.
+const tangerine = Tangerine({
+  variable: "--font-tangerine",
+  weight: ["400", "700"],
   subsets: ["latin"],
 });
 
@@ -64,7 +72,7 @@ export default function RootLayout({
     <ClerkProvider localization={esES}>
       <html
         lang="es"
-        className={`${cinzel.variable} ${geistMono.variable} ${cormorantGaramond.variable} h-full antialiased`}
+        className={`${cinzel.variable} ${geistMono.variable} ${cormorantGaramond.variable} ${tangerine.variable} h-full antialiased`}
       >
         <body className="flex min-h-full flex-col">
           {/* El service worker se sirve desde la ruta /serwist, que lo compila

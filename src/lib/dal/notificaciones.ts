@@ -1,6 +1,6 @@
 import "server-only";
 
-import { auth } from "@clerk/nextjs/server";
+import { auth, clerkClient } from "@clerk/nextjs/server";
 import { sendNotification, setVapidDetails, WebPushError } from "web-push";
 
 import { prisma } from "@/lib/prisma";
@@ -91,4 +91,23 @@ export async function enviarNotificacionPush(
       }
     }),
   );
+}
+
+/**
+ * Avisa a todas las administradoras (publicMetadata.role === "admin" en
+ * Clerk — no hay tabla propia de roles). Resuelto dinámicamente en vez de
+ * un id fijo: si el cliente agrega una segunda admin, recibe el aviso sin
+ * tocar código. excluirUserId evita avisarle a la propia autora del post.
+ */
+export async function notificarAdmins(
+  datos: { titulo: string; cuerpo: string; url: string },
+  excluirUserId?: string,
+) {
+  const client = await clerkClient();
+  const { data: usuarios } = await client.users.getUserList({ limit: 500 });
+  const admins = usuarios.filter(
+    (usuario) => usuario.publicMetadata?.role === "admin" && usuario.id !== excluirUserId,
+  );
+
+  await Promise.all(admins.map((admin) => enviarNotificacionPush(admin.id, datos)));
 }

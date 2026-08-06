@@ -29,6 +29,8 @@ const FILL_SIN_FASE = "fill-borde";
 const CENTRO = 170;
 const RADIO_EXTERIOR = 160;
 const RADIO_INTERIOR = 95;
+/** Un poco más chico que el anillo, para que quede aire entre la imagen y el borde. */
+const RADIO_FONDO = RADIO_EXTERIOR - 35;
 const RADIO_MARCADORES = (RADIO_EXTERIOR + RADIO_INTERIOR) / 2;
 const RADIO_MARCADOR = 15;
 const TOTAL_DIAS = 28;
@@ -38,6 +40,18 @@ const PASO = 360 / TOTAL_DIAS;
 function punto(radio: number, anguloGrados: number) {
   const rad = (anguloGrados * Math.PI) / 180;
   return { x: CENTRO + radio * Math.cos(rad), y: CENTRO + radio * Math.sin(rad) };
+}
+
+/**
+ * Promedio circular en grados: un promedio aritmético común se rompe si el
+ * grupo de ángulos cruza el borde 0°/360° (p. ej. 350° y 10° promediarían
+ * mal a 180° en vez de 0°). Sumar como vectores y volver con atan2 lo evita.
+ */
+function anguloPromedio(angulos: number[]): number | null {
+  if (angulos.length === 0) return null;
+  const sumaX = angulos.reduce((acc, a) => acc + Math.cos((a * Math.PI) / 180), 0);
+  const sumaY = angulos.reduce((acc, a) => acc + Math.sin((a * Math.PI) / 180), 0);
+  return (Math.atan2(sumaY, sumaX) * 180) / Math.PI;
 }
 
 export function RuedaSincronario({
@@ -67,12 +81,47 @@ export function RuedaSincronario({
   const hunabKu = celdas.find((c) => c.tipo === "hunab-ku") ?? null;
   const fueraDelTiempo = luna === 13 ? fueraDelTiempoDe(inicio) : null;
 
+  // La luna llena real no cae en un solo día sino en un arco de ~4 casillas
+  // consecutivas con el mismo emoji 🌕 (8 fases finas repartidas en un ciclo
+  // sinódico de ~29.5 días sobre 28 casillas). Se rota el fondo para que su
+  // propia luna llena (dibujada arriba del todo, o sea en ANGULO_INICIAL sin
+  // rotar) apunte al punto medio de ese arco.
+  const angulosLlena: number[] = [];
+  for (const c of diasNormales) {
+    if (c.tipo !== "normal") continue;
+    if (faseLunar(c.fecha, hemisferio).clave !== "llena") continue;
+    angulosLlena.push(ANGULO_INICIAL + (c.diaEnLuna - 1 + 0.5) * PASO);
+  }
+  const anguloLlenaPromedio = anguloPromedio(angulosLlena);
+  const rotacionFondo = anguloLlenaPromedio === null ? 0 : anguloLlenaPromedio - ANGULO_INICIAL;
+
   return (
     <div className="rounded-2xl border-2 border-luna/50 bg-superficie p-2 sm:p-4">
       <svg
         viewBox="0 0 340 340"
         className="mx-auto aspect-square w-full max-w-sm overflow-visible"
       >
+        <defs>
+          <clipPath id="recorte-fondo-sincronario">
+            <circle cx={CENTRO} cy={CENTRO} r={RADIO_FONDO} />
+          </clipPath>
+        </defs>
+
+        {/* Fondo decorativo del sincronario: reemplaza a centro_sincro.png.
+            preserveAspectRatio="slice" recorta sin deformar la imagen. */}
+        <image
+          href="/alternativa.png"
+          x={CENTRO - RADIO_FONDO}
+          y={CENTRO - RADIO_FONDO}
+          width={RADIO_FONDO * 2}
+          height={RADIO_FONDO * 2}
+          preserveAspectRatio="xMidYMid slice"
+          clipPath="url(#recorte-fondo-sincronario)"
+          opacity={0.5}
+          style={{ filter: "saturate(170%)" }}
+          transform={`rotate(${rotacionFondo} ${CENTRO} ${CENTRO})`}
+        />
+
         <circle
           cx={CENTRO}
           cy={CENTRO}
@@ -105,25 +154,6 @@ export function RuedaSincronario({
             />
           );
         })}
-
-        {/* Imagen fija del centro del sincronario: no depende de la luna
-            mostrada (siempre la misma), recortada en círculo exacto para
-            encajar en el círculo interior. */}
-        <defs>
-          <clipPath id="recorte-centro-sincronario">
-            <circle cx={CENTRO} cy={CENTRO} r={RADIO_INTERIOR} />
-          </clipPath>
-        </defs>
-        <image
-          href="/centro_sincro.png"
-          x={CENTRO - RADIO_INTERIOR}
-          y={CENTRO - RADIO_INTERIOR}
-          width={RADIO_INTERIOR * 2}
-          height={RADIO_INTERIOR * 2}
-          preserveAspectRatio="xMidYMid slice"
-          clipPath="url(#recorte-centro-sincronario)"
-        />
-
 
         {diasNormales.map((celda) => {
           if (celda.tipo !== "normal") return null;

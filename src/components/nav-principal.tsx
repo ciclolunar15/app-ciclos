@@ -6,8 +6,8 @@ import { usePathname } from "next/navigation";
 const ENLACES_BASE = [
   { href: "/hoy", etiqueta: "Hoy", icono: "☀" },
   { href: "/registro", etiqueta: "Registro", icono: "✎" },
-  { href: "/calendario", etiqueta: "Calendario", icono: "▦" },
-  { href: "/foro", etiqueta: "Foro", icono: "◈" },
+  { href: "/calendario", etiqueta: "Syncronario", icono: "▦" },
+  { href: "/foro", etiqueta: "Tribu", icono: "◈" },
 ] as const;
 
 const ENLACE_ADMIN = { href: "/admin/consejos", etiqueta: "Admin", icono: "⚙" } as const;

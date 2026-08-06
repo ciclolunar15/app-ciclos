@@ -22,7 +22,7 @@ export default function LayoutAuth({
       <div className="absolute top-6 left-1/2 flex -translate-x-1/2 items-center gap-3">
         <Link
           href="/"
-          className="font-serif text-lg font-semibold tracking-tight text-espuma transition-opacity hover:opacity-80"
+          className="font-tangerine text-3xl font-bold tracking-tight text-espuma transition-opacity hover:opacity-80"
         >
           Maresa
         </Link>

@@ -41,7 +41,7 @@ export default function Landing() {
         )}
 
         <header className="absolute inset-x-0 top-0 z-10 mx-auto flex w-full max-w-3xl items-center gap-3 px-6 pt-6">
-          <span className="font-serif text-lg font-semibold tracking-tight text-espuma">
+          <span className="font-tangerine text-3xl font-bold tracking-tight text-espuma">
             Maresa
           </span>
           <BotonInstalarPwa />

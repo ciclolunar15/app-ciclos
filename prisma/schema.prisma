@@ -20,6 +20,15 @@ model User {
   createdAt  DateTime   @default(now())
   updatedAt  DateTime   @updatedAt
 
+  /// Última fase (folicular/ovulatoria/lutea) por la que ya se avisó, para
+  /// que el cron de recordatorios (api/cron/recordatorios) no repita el
+  /// mismo push todos los días mientras dure la fase.
+  notificacionFaseCiclo String?
+  /// Fecha de "próximo período" para la que ya se mandó el aviso "se acerca".
+  notificacionPeriodoProximo DateTime? @db.Date
+  /// Fecha de "próximo período" para la que ya se mandó el aviso "es hoy".
+  notificacionPeriodoHoy     DateTime? @db.Date
+
   cycles            Cycle[]
   postsForo         PostForo[]
   pushSubscriptions PushSubscription[]

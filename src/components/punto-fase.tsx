@@ -20,7 +20,7 @@ export function PuntoFase({ fase }: { fase: FaseCiclo }) {
 /** Leyenda de periodo registrado/previsto + las 4 fases. Igual en Ciclo y Sincronario. */
 export function LeyendaFases() {
   return (
-    <div className="flex flex-wrap gap-x-4 gap-y-2 text-xs text-white">
+    <div className="flex flex-wrap gap-x-4 gap-y-2 rounded-2xl bg-turquesa/35 p-4 text-xs text-white">
       <span className="flex items-center gap-1.5">
         <span className="size-3 rounded-full ring-2 ring-espuma ring-offset-1 ring-offset-superficie" />{" "}
         Hoy
@@ -38,6 +38,10 @@ export function LeyendaFases() {
           {ETIQUETAS_FASE[f]}
         </span>
       ))}
+      <span className="flex items-center gap-1.5">
+        <span className="size-2 rounded-full bg-borde" />
+        Sin registro
+      </span>
     </div>
   );
 }

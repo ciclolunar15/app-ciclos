@@ -56,7 +56,7 @@ export default async function LayoutApp({
           <div className="flex items-center gap-3">
             <Link
               href="/hoy"
-              className="font-serif text-lg font-semibold tracking-tight text-texto"
+              className="font-tangerine text-3xl font-bold tracking-tight text-texto"
             >
               Maresa
             </Link>

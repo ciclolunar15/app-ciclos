@@ -5,7 +5,7 @@ import { cache } from "react";
 
 import { prisma } from "@/lib/prisma";
 import { perfilActual } from "@/lib/dal/cycles";
-import { enviarNotificacionPush } from "@/lib/dal/notificaciones";
+import { enviarNotificacionPush, notificarAdmins } from "@/lib/dal/notificaciones";
 
 /**
  * DAL del foro comunitario. Mismo criterio que dal/consejos.ts: el userId (y
@@ -187,6 +187,14 @@ export async function crearPost(datos: {
       url: "/foro",
     });
   }
+
+  // Aviso aparte para mantener a la administradora al tanto de toda
+  // actividad del foro (no solo cuando le responden a ella), sin revelar
+  // autora ni contenido — coherente con la regla de anonimato.
+  await notificarAdmins(
+    { titulo: "Maresa · Foro", cuerpo: "Hay una nueva publicación en el foro.", url: "/foro" },
+    userId,
+  );
 
   return post;
 }
