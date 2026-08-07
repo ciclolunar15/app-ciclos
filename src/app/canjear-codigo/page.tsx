@@ -45,7 +45,7 @@ export default async function PaginaCanjearCodigo() {
         </p>
 
         <div className="mt-5 rounded-xl bg-fondo p-4 text-sm">
-          <p className="font-medium text-texto">1. Hacé la transferencia</p>
+          <p className="font-medium text-texto">1. Hacé la transferencia (pago único)</p>
           <p className="mt-1 flex flex-wrap items-center gap-2 text-tenue">
             Alias: <span className="font-semibold text-texto">{ALIAS}</span>
             <BotonCopiar texto={ALIAS} className="bg-borde text-texto hover:bg-luna/30" />

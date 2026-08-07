@@ -29,7 +29,7 @@ export function BotonCopiar({
       aria-label={`Copiar ${texto}`}
       className={`inline-flex shrink-0 items-center gap-1 rounded-full px-2.5 py-1 text-xs font-medium transition-colors ${className}`}
     >
-      {copiado ? "✓ Copiado" : "📋 Copiar"}
+      {copiado ? "Copiado" : "Copiar"}
     </button>
   );
 }
