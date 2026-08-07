@@ -21,14 +21,14 @@ export default function manifest(): MetadataRoute.Manifest {
     categories: ["health", "lifestyle"],
     icons: [
       {
-        src: "/centro_sincro.png",
-        sizes: "1024x1024",
+        src: "/icono_definitivo.png",
+        sizes: "1254x1254",
         type: "image/png",
         purpose: "any",
       },
       {
-        src: "/centro_sincro.png",
-        sizes: "1024x1024",
+        src: "/icono_definitivo.png",
+        sizes: "1254x1254",
         type: "image/png",
         purpose: "maskable",
       },

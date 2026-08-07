@@ -45,8 +45,8 @@ export const metadata: Metadata = {
   // instalación como PWA: la pestaña del navegador y el ícono instalado
   // muestran así el mismo dibujo.
   icons: {
-    icon: "/centro_sincro.png",
-    apple: "/centro_sincro.png",
+    icon: "/icono_definitivo.png",
+    apple: "/icono_definitivo.png",
   },
   appleWebApp: {
     capable: true,
