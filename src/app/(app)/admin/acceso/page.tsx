@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 
 import { NoAutorizada, codigoVigente } from "@/lib/dal/acceso";
 import { accionGenerarCodigo } from "./actions";
+import { BotonCopiar } from "@/components/boton-copiar";
 
 export const metadata: Metadata = {
   title: "Admin · Acceso",
@@ -22,7 +23,7 @@ export default async function PaginaAdminAcceso() {
   return (
     <div className="flex flex-col gap-6">
       <h1 className="font-serif text-2xl font-semibold tracking-tight">Admin · Acceso</h1>
-      <p className="text-sm text-tenue">
+      <p className="rounded-2xl bg-turquesa/15 p-4 text-sm text-tenue">
         Generá un código de único uso después de confirmar el comprobante de pago por
         WhatsApp, y pasáselo a esa persona por el mismo chat.
       </p>
@@ -33,9 +34,12 @@ export default async function PaginaAdminAcceso() {
             <p className="text-xs font-medium uppercase tracking-wide text-tenue">
               Código vigente
             </p>
-            <p className="mt-2 font-mono text-4xl font-bold tracking-[0.3em] text-luna">
-              {vigente.codigo}
-            </p>
+            <div className="mt-2 flex items-center justify-center gap-3">
+              <p className="font-mono text-4xl font-bold tracking-[0.3em] text-luna">
+                {vigente.codigo}
+              </p>
+              <BotonCopiar texto={vigente.codigo} className="bg-fondo text-texto hover:bg-borde" />
+            </div>
           </>
         ) : (
           <p className="text-sm text-tenue">Todavía no generaste ningún código.</p>

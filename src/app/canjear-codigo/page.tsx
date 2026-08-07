@@ -6,6 +6,9 @@ import { redirect } from "next/navigation";
 import { tieneAcceso } from "@/lib/dal/acceso";
 import { FormularioCanjearCodigo } from "@/components/formulario-canjear-codigo";
 import { BotonVolver } from "@/components/boton-volver";
+import { BotonCopiar } from "@/components/boton-copiar";
+
+const ALIAS = "Mente.universal";
 
 export const metadata: Metadata = {
   title: "Acceso",
@@ -43,8 +46,9 @@ export default async function PaginaCanjearCodigo() {
 
         <div className="mt-5 rounded-xl bg-fondo p-4 text-sm">
           <p className="font-medium text-texto">1. Hacé la transferencia</p>
-          <p className="mt-1 text-tenue">
-            Alias: <span className="font-semibold text-texto">Mente.universal</span>
+          <p className="mt-1 flex flex-wrap items-center gap-2 text-tenue">
+            Alias: <span className="font-semibold text-texto">{ALIAS}</span>
+            <BotonCopiar texto={ALIAS} className="bg-borde text-texto hover:bg-luna/30" />
           </p>
           <p className="mt-1 text-tenue">
             Monto: <span className="font-semibold text-texto">$8.000</span>
