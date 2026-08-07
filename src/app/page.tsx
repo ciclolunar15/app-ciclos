@@ -6,14 +6,8 @@ import Link from "next/link";
 // Clerk 7 sustituye <SignedIn>/<SignedOut> por <Show when="…">.
 import { Show } from "@clerk/nextjs";
 
-import { faseLunar } from "@/lib/moon";
-import { BotonInstalarPwa } from "@/components/boton-instalar-pwa";
-
-// Sin esto, Next.js pre-renderiza la landing una sola vez en el build (no
-// depende de sesión ni de ninguna otra API dinámica) y congela `new Date()`
-// en ese momento: la fase lunar mostrada dejaría de coincidir con la real a
-// medida que pasan los días.
-export const dynamic = "force-dynamic";
+import { BannerInstalarPwa } from "@/components/banner-instalar-pwa";
+import { BurbujaIntro } from "@/components/burbuja-intro";
 
 // La imagen de fondo es opcional: si no está en public/, el degradado
 // "degradado-ola" ya cubre la sección sin dejar hueco ni error de carga.
@@ -22,13 +16,11 @@ const TIENE_IMAGEN_FONDO = existsSync(
 );
 
 export default function Landing() {
-  // La landing es pública y no depende de ninguna sesión, así que la luna se
-  // calcula para el hemisferio norte por defecto.
-  const luna = faseLunar(new Date());
-
   return (
     <div className="flex flex-1 flex-col">
-      <section className="degradado-ola relative flex flex-1 flex-col justify-end overflow-hidden text-espuma">
+      <BannerInstalarPwa />
+
+      <section className="degradado-ola relative overflow-hidden text-espuma">
         {TIENE_IMAGEN_FONDO && (
           <Image
             src="/intro.jpeg"
@@ -40,31 +32,75 @@ export default function Landing() {
           />
         )}
 
-        <header className="absolute inset-x-0 top-0 z-10 mx-auto flex w-full max-w-3xl items-center gap-3 px-6 pt-6">
-          <span className="font-tangerine text-3xl font-bold tracking-tight text-espuma">
+        <div className="relative mx-auto w-full max-w-3xl px-6 pb-16 pt-16 sm:pt-20">
+          
+          <h1 className="mt-6 text-center font-tangerine text-6xl font-bold tracking-tight text-espuma sm:text-7xl">
             Maresa
-          </span>
-          <BotonInstalarPwa />
-        </header>
-
-        <div className="relative mx-auto w-full max-w-3xl px-6 py-16 sm:py-24">
-          <p className="flex items-center gap-2 text-sm text-espuma/80">
-            <span aria-hidden className="text-lg">
-              {luna.emoji}
-            </span>
-            Hoy hay {luna.nombre.toLowerCase()}
-          </p>
-
-          <h1 className="mt-4 max-w-lg font-serif text-4xl font-semibold leading-tight tracking-tight sm:text-5xl">
-            Tu ciclo y la luna, en el mismo calendario
           </h1>
 
-          <p className="mt-4 max-w-md text-lg leading-relaxed text-espuma/80">
-            Registra tus periodos y observa cómo tu ritmo se acompasa con
-            las fases lunares. Privado, sin anuncios y sin vender tus datos.
-          </p>
+          <div className="mt-10">
+            <BurbujaIntro lado="izquierda">
+              <p className="font-serif text-3xl font-semibold leading-tight tracking-tight sm:text-4xl">
+                AMARSE (Maresa)
+              </p>
 
-          <div className="mt-8 flex flex-wrap gap-3">
+              <div className="mt-4 space-y-4 text-base leading-relaxed text-espuma/90">
+                <p>
+                  ¡Hola! Soy Mar, Mujer Canal y Medicina. Creadora de éste
+                  espacio exclusivamente para vos y tu salud menstrual y
+                  Uterina. ¿Sabías que nuestro cuerpo se desequilibra y
+                  enferma cuando nos desconectamos de él? Ésta App te guiará
+                  para volver a tu centro, a saber dónde estás y hacia dónde
+                  ir. Pero sobre todo, a sentir y habitar tus cuerpos con
+                  Amor, honrando tu ciclo y tu naturaleza.
+                </p>
+
+                <p>
+                  AMARSE (Maresa) es el primer y gran paso hacia una vida
+                  saludable y en coherencia con tu Útero, tu valor, Poder,
+                  Creatividad y Merecimiento.
+                </p>
+
+                <p className="font-serif text-xl italic text-luna">
+                  ¿Estás lista para amarte?
+                </p>
+              </div>
+            </BurbujaIntro>
+          </div>
+
+          <div className="mt-16 sm:mt-24">
+            <BurbujaIntro lado="derecha">
+              <p className="font-serif text-lg font-semibold text-luna">
+                ¿Y de qué se trata todo esto?
+              </p>
+
+              <div className="mt-4 space-y-4 text-base leading-relaxed text-espuma/90">
+                <p>
+                  Aquí encontrarás un sincronario lunar y menstrual donde
+                  conectás las lunas con tu ciclo. Aunque al comienzo sientas
+                  que no estás en sincronía, es un proceso que con el tiempo
+                  vas a poder ver y sentir cómo todo entra en coherencia y
+                  armonía. Un Foro &quot;La Tribu&quot; donde podés
+                  consultar y sacarte dudas, charlar con otros seres
+                  menstruantes. Además vas a tener cada día tips (posturas
+                  de yoga, rituales, recetas, ideas, etc.), consejitos y
+                  recomendaciones para transitar cada etapa con más AutoAmor
+                  y Calma. Habitando el cuerpo y conectándote con tu centro,
+                  donde están todas las respuestas. No olvides que el camino
+                  siempre es hacia adentro 🌀.
+                </p>
+
+                <p>
+                  Si resonás con esta magia, para acceder a la app das{" "}
+                  <strong className="font-semibold text-luna">$8.000</strong>{" "}
+                  en retribución a tanto Amor entregado, que te será
+                  devuelto 🪄
+                </p>
+              </div>
+            </BurbujaIntro>
+          </div>
+
+          <div className="mt-12 flex flex-wrap justify-center gap-3 px-6 sm:px-0">
             <Show when="signed-out">
               <Link
                 href="/registrarse"
@@ -89,31 +125,6 @@ export default function Landing() {
             </Show>
           </div>
         </div>
-      </section>
-
-      <section className="mx-auto grid w-full max-w-3xl gap-6 px-6 py-12 sm:grid-cols-3">
-        {[
-          {
-            titulo: "Predicción que aprende",
-            texto:
-              "Las estimaciones se recalculan con cada periodo que registras, dando más peso a los ciclos recientes.",
-          },
-          {
-            titulo: "Fase lunar cada día",
-            texto:
-              "El calendario muestra la luna de cada jornada junto a tu fase del ciclo, para ver la relación entre ambas.",
-          },
-          {
-            titulo: "Tus datos son tuyos",
-            texto:
-              "Solo tú accedes a tu registro. Nada se comparte con terceros ni se usa con fines publicitarios.",
-          },
-        ].map(({ titulo, texto }) => (
-          <div key={titulo}>
-            <h2 className="font-serif font-semibold">{titulo}</h2>
-            <p className="mt-2 text-sm leading-relaxed text-tenue">{texto}</p>
-          </div>
-        ))}
       </section>
 
       <footer className="border-t border-borde px-6 py-6 text-center text-xs text-tenue">

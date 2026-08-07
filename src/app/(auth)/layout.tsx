@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { BotonInstalarPwa } from "@/components/boton-instalar-pwa";
+import { BotonVolver } from "@/components/boton-volver";
 
 export default function LayoutAuth({
   children,
@@ -10,6 +11,8 @@ export default function LayoutAuth({
 }) {
   return (
     <div className="relative flex min-h-dvh flex-col items-center justify-center bg-marea px-4 py-12">
+      <BotonVolver className="absolute top-6 left-6 z-20 text-espuma hover:bg-espuma/10" />
+
       {/*
         "Maresa" se fija a una distancia constante de la parte superior del
         viewport, en vez de vivir en el mismo flujo centrado que la tarjeta.

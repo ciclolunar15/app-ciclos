@@ -29,9 +29,15 @@ model User {
   /// Fecha de "próximo período" para la que ya se mandó el aviso "es hoy".
   notificacionPeriodoHoy     DateTime? @db.Date
 
-  cycles            Cycle[]
-  postsForo         PostForo[]
-  pushSubscriptions PushSubscription[]
+  /// Intentos fallidos al canjear un código de acceso. Al llegar al límite
+  /// (ver LIMITE_INTENTOS en lib/dal/acceso.ts) se bloquea el canje — hoy no
+  /// hay forma de resetearlo desde la UI, solo a mano en la base.
+  intentosCodigoFallidos Int @default(0)
+
+  cycles              Cycle[]
+  postsForo           PostForo[]
+  pushSubscriptions   PushSubscription[]
+  codigosAccesoUsados CodigoAcceso[]
 }
 
 /// Un periodo registrado. startDate es el primer día de sangrado y es
@@ -121,4 +127,20 @@ model PushSubscription {
   p256dh    String
   auth      String
   createdAt DateTime @default(now())
+}
+
+/// Código de único uso para el acceso pago. Solo el más reciente sin usar
+/// (usadoPorId: null, el de mayor createdAt) es "vigente" — no hace falta
+/// invalidar los viejos a mano, ver canjearCodigo() en lib/dal/acceso.ts.
+/// El acceso que otorga es permanente: generar uno nuevo no le quita el
+/// acceso a quien ya canjeó uno anterior.
+model CodigoAcceso {
+  id         String    @id @default(cuid())
+  codigo     String    @unique
+  /// userId (Clerk) de la administradora que lo generó.
+  creadoPor  String
+  createdAt  DateTime  @default(now())
+  usadoPorId String?
+  usadoPor   User?     @relation(fields: [usadoPorId], references: [id], onDelete: SetNull)
+  usadoEn    DateTime?
 }

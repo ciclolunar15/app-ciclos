@@ -1,11 +1,13 @@
 import Link from "next/link";
 import { UserButton } from "@clerk/nextjs";
 import { auth, currentUser } from "@clerk/nextjs/server";
+import { redirect } from "next/navigation";
 
 import { NavPrincipal } from "@/components/nav-principal";
 import { SincronizadorZonaHoraria } from "@/components/sincronizador-zona-horaria";
 import { BotonInstalarPwa } from "@/components/boton-instalar-pwa";
 import { perfilActual } from "@/lib/dal/cycles";
+import { tieneAcceso } from "@/lib/dal/acceso";
 
 export default async function LayoutApp({
   children,
@@ -25,6 +27,12 @@ export default async function LayoutApp({
   // en cada acción/consulta admin, igual que el resto del DAL.
   const usuario = await currentUser();
   const esAdmin = usuario?.publicMetadata?.role === "admin";
+
+  // App de acceso pago: tieneAcceso() ya devuelve true para admins, así que
+  // esto no le cambia nada a la admin — solo bloquea a quien no canjeó
+  // todavía un código. /canjear-codigo vive fuera de este grupo de rutas
+  // justo para no volver a pasar por este mismo chequeo y hacer un loop.
+  if (!(await tieneAcceso())) redirect("/canjear-codigo");
 
   return (
     <div className="flex min-h-dvh flex-col">

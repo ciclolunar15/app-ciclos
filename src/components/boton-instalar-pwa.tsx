@@ -1,45 +1,10 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEventoInstalacion } from "@/hooks/usar-evento-instalacion";
 
-type EventoInstalacion = Event & {
-  prompt: () => Promise<void>;
-  userChoice: Promise<{ outcome: "accepted" | "dismissed" }>;
-};
-
-/**
- * Solo Chrome/Android (y derivados basados en Chromium) disparan
- * "beforeinstallprompt". Safari/iOS no lo soporta, así que ahí el botón
- * nunca aparece — la única vía en ese caso sigue siendo "Compartir" →
- * "Agregar a pantalla de inicio", manual.
- */
 export function BotonInstalarPwa() {
-  const [evento, setEvento] = useState<EventoInstalacion | null>(null);
-
-  useEffect(() => {
-    function alDisponible(e: Event) {
-      e.preventDefault();
-      setEvento(e as EventoInstalacion);
-    }
-    function alInstalar() {
-      setEvento(null);
-    }
-    window.addEventListener("beforeinstallprompt", alDisponible);
-    window.addEventListener("appinstalled", alInstalar);
-    return () => {
-      window.removeEventListener("beforeinstallprompt", alDisponible);
-      window.removeEventListener("appinstalled", alInstalar);
-    };
-  }, []);
-
-  if (!evento) return null;
-
-  async function instalar() {
-    if (!evento) return;
-    await evento.prompt();
-    await evento.userChoice;
-    setEvento(null);
-  }
+  const { disponible, instalar } = useEventoInstalacion();
+  if (!disponible) return null;
 
   return (
     <button

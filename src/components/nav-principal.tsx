@@ -6,15 +6,18 @@ import { usePathname } from "next/navigation";
 const ENLACES_BASE = [
   { href: "/hoy", etiqueta: "Hoy", icono: "☀" },
   { href: "/registro", etiqueta: "Registro", icono: "✎" },
-  { href: "/calendario", etiqueta: "Syncronario", icono: "▦" },
+  { href: "/calendario", etiqueta: "Sincronario", icono: "▦" },
   { href: "/foro", etiqueta: "Tribu", icono: "◈" },
 ] as const;
 
-const ENLACE_ADMIN = { href: "/admin/consejos", etiqueta: "Admin", icono: "⚙" } as const;
+const ENLACES_ADMIN = [
+  { href: "/admin/consejos", etiqueta: "Admin", icono: "⚙" },
+  { href: "/admin/acceso", etiqueta: "Acceso", icono: "🔑" },
+] as const;
 
 export function NavPrincipal({ esAdmin = false }: { esAdmin?: boolean }) {
   const ruta = usePathname();
-  const enlaces = esAdmin ? [...ENLACES_BASE, ENLACE_ADMIN] : ENLACES_BASE;
+  const enlaces = esAdmin ? [...ENLACES_BASE, ...ENLACES_ADMIN] : ENLACES_BASE;
 
   return (
     <nav
