@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import { notFound } from "next/navigation";
 
 import { NoAutorizada, listarTodosLosConsejos } from "@/lib/dal/consejos";
 import { LIMITE_IMAGENES, listarImagenesSincronario } from "@/lib/dal/sincronario-imagen";
 import { FormularioConsejo } from "@/components/formulario-consejo";
 import { FormularioImagenSincronario } from "@/components/formulario-imagen-sincronario";
+import { ImagenContenida } from "@/components/imagen-contenida";
 import { accionBorrarConsejo, accionEliminarImagenSincronario } from "./actions";
 
 export const metadata: Metadata = {
@@ -100,12 +100,9 @@ export default async function PaginaAdminConsejos() {
                 className="flex flex-col gap-3 rounded-2xl border border-borde bg-superficie p-4"
               >
                 <div className="relative aspect-[4/3] w-full overflow-hidden rounded-xl">
-                  <Image
+                  <ImagenContenida
                     src={`/api/imagen-sincronario/${imagen.id}`}
                     alt="Imagen del sincronario"
-                    fill
-                    unoptimized
-                    className="object-cover"
                   />
                 </div>
                 <form action={accionEliminarImagenSincronario} className="flex justify-end">
