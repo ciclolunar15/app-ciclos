@@ -144,3 +144,17 @@ model CodigoAcceso {
   usadoPor   User?     @relation(fields: [usadoPorId], references: [id], onDelete: SetNull)
   usadoEn    DateTime?
 }
+
+/// Imagen genérica del sincronario, subida por la administradora desde
+/// /admin/consejos. Es independiente de la etapa del ciclo y de la fase
+/// lunar de cada usuaria — se muestra igual para todas. Solo existe una
+/// fila a la vez: al subir una nueva se borra la anterior (ver
+/// lib/dal/sincronario-imagen.ts).
+model ImagenSincronario {
+  id        String   @id @default(cuid())
+  datos     Bytes
+  tipoMime  String
+  /// userId (Clerk) de la administradora que la subió.
+  subidaPor String
+  createdAt DateTime @default(now())
+}

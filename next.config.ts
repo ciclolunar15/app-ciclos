@@ -9,6 +9,13 @@ const nextConfig: NextConfig = {
     // esto Turbopack lo toma como raíz del espacio de trabajo.
     root: path.resolve(import.meta.dirname),
   },
+  experimental: {
+    // Por defecto una Server Action corta el body en 1 MB. La imagen del
+    // sincronario (admin/consejos) necesita más margen — 4 MB es además el
+    // tope real de una función serverless de Vercel, así que pedir más acá
+    // no serviría de nada.
+    serverActions: { bodySizeLimit: "4mb" },
+  },
   images: {
     // Fotos de perfil de las usuarias en el foro (dal/foro.ts las trae de
     // Clerk). El UserButton del header maneja su propio avatar sin pasar por

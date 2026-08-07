@@ -24,7 +24,7 @@ import { capitalizar } from "@/lib/format";
 import { LeyendaFases } from "@/components/punto-fase";
 import { RuedaSincronario } from "@/components/rueda-sincronario";
 import { GridSincronario } from "@/components/grid-sincronario";
-import { Desplegable } from "@/components/desplegable";
+import { ImagenSincronario } from "@/components/imagen-sincronario";
 import { SeccionConsejos } from "@/components/seccion-consejos";
 import { DeslizarLuna } from "@/components/deslizar-luna";
 
@@ -253,22 +253,7 @@ export default async function PaginaCalendario({ searchParams }: Props) {
         esHoy={isoSeleccionado === isoHoy}
       />
 
-      <Desplegable
-        titulo="¿Qué es el sincronario?"
-        claseBorde="border-2 border-luna/50"
-      >
-        <p>
-          «Sincronario» viene de <em>syn-</em> (junto) + <em>cronos</em>{" "}
-          (tiempo): estar en sintonía con el tiempo. Es el calendario de 13
-          lunas de José y Lloydine Argüelles: 13 lunas de 28 días (364 días)
-          más el 25 de julio, el Día Fuera del Tiempo — en total, 365 días.
-        </p>
-        <p>
-          Cada ser vivo tiene su propio ritmo — los animales, las plantas,
-          los árboles, las mareas — y el sincronario invita a seguir ese
-          ritmo interno. Como dice su propia filosofía: el tiempo es arte.
-        </p>
-      </Desplegable>
+      <ImagenSincronario />
     </div>
   );
 }

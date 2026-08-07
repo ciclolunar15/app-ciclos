@@ -14,9 +14,10 @@ export const metadata: Metadata = {
   title: "Acceso",
 };
 
-const MENSAJE_WHATSAPP = "¡Buenas! Te dejo la factura del pago por el uso de la aplicación.";
-// Formato argentino para wa.me: 54 (país) + 9 (móvil) + el número tal cual.
-const ENLACE_WHATSAPP = `https://wa.me/5492804632189?text=${encodeURIComponent(MENSAJE_WHATSAPP)}`;
+const MENSAJE_WHATSAPP = "¡Buenas! Te dejo el comprobante del pago por el acceso a Maresa.";
+// Formato argentino para wa.me: 54 (país) + 9 (móvil) + el número tal cual,
+// sin espacios ni guiones. Número real: +54 9 280 434-2532.
+const ENLACE_WHATSAPP = `https://wa.me/5492804342532?text=${encodeURIComponent(MENSAJE_WHATSAPP)}`;
 
 export default async function PaginaCanjearCodigo() {
   // Fuera de (app) a propósito: si viviera adentro, el propio layout que
